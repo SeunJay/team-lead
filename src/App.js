@@ -39,9 +39,27 @@ function App() {
     }
   }, [account]);
 
-  // useEffect(() => {
-  //   teamLeadContract();
-  // }, []);
+  useEffect(() => {
+    if (window.ethereum) {
+      const teamLeadContract = async () => {
+        const signer = await getSigner();
+        // Create a contract
+        const contract = new Contract(
+          "0xB0b72FB76a9390943A869eD2e837D183Cd44F954",
+          teamLead,
+          signer
+        );
+
+        contract.on("LeadSet", (sender, newTeamLead) => {
+          console.log("sender ", sender);
+          console.log("new team lead ", newTeamLead);
+        });
+      };
+
+      teamLeadContract();
+    }
+  }, []);
+
   const checkMetamask = async () => {
     if (isMetaMaskInstalled) {
       if (window.ethereum.chainId === "0x13881") {
@@ -79,10 +97,8 @@ function App() {
   const getTeamLead = async () => {
     try {
       const teamLeadCon = await teamLeadContract();
-      console.log(teamLeadCon);
       const currentTeamLead = await teamLeadCon.getLead();
       setTeamLeadName(currentTeamLead);
-      console.log(currentTeamLead);
     } catch (error) {
       console.log(error);
     }
@@ -91,10 +107,8 @@ function App() {
   const setWinner = async () => {
     try {
       const teamLeadCon = await teamLeadContract();
-      console.log(teamLeadCon);
       const tx = await teamLeadCon.setLead(newTeamLead);
       const receipt = await tx.wait(1);
-      console.log(receipt);
       if (receipt.status) {
         toast({
           position: "bottom-left",
@@ -105,7 +119,6 @@ function App() {
           ),
         });
       }
-      console.log(receipt);
     } catch (error) {
       console.log(error);
     }

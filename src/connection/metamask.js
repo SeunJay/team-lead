@@ -19,7 +19,6 @@ export const connect = () => {
   return window.ethereum
     .request({ method: "eth_requestAccounts" })
     .then((accounts) => {
-      console.log(accounts);
       return accounts;
     })
     .catch((err) => {
