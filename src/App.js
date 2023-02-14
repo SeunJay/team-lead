@@ -145,7 +145,7 @@ function App() {
                 </AlertDescription>
               </Alert>
             )}
-            <Text>Lead DAppz</Text>
+            <Text>Team Lead dAppz</Text>
             <Text>{account}</Text>
             <Text>{myBalance}</Text>
             <Button onClick={walletConnection} disabled={account}>

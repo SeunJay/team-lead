@@ -2,9 +2,9 @@ name: Deploy to Render
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   pull_request:
-    branches: [ main ]
+    branches: [ develop ]
 
 jobs:
   deploy:
@@ -15,6 +15,6 @@ jobs:
       - name: Trigger deployment
         uses: sws2apps/render-deployment@main
         with:
-          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
+          serviceId: ${{ secrets.DEV_RENDER_SERVICE_ID }}
           apiKey: ${{ secrets.RENDER_API_KEY }}
           multiple: false
